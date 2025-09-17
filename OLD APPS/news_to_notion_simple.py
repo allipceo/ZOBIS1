@@ -3,10 +3,12 @@ import os
 from notion_client import Client
 from datetime import datetime
 from email.utils import parsedate_to_datetime
+from dotenv import load_dotenv
 
-# 환경변수에서 토큰 가져오기
-NOTION_TOKEN = "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"
-DATABASE_ID = "22aa613d25ff80888257c652d865f85a"
+# 환경변수에서 토큰/DB ID 가져오기 (.env 지원)
+load_dotenv()
+NOTION_TOKEN = os.getenv("NOTION_TOKEN")
+DATABASE_ID = os.getenv("NOTION_DATABASE_ID")
 
 def upload_to_notion():
     # 노션 클라이언트 초기화

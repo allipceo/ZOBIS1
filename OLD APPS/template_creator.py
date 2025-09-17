@@ -7,6 +7,8 @@ GIA Notion 템플릿 자동 생성 스크립트
 import requests
 import json
 import datetime
+import os
+from dotenv import load_dotenv
 
 # --------------------
 # 1. 템플릿 구성 요소 정의
@@ -170,10 +172,18 @@ class NotionTemplateCreator:
 # --------------------
 
 def main():
-    # 실제 실행 시 아래 값을 조대표님께 받은 값으로 교체
-    token = "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"
-    task_db_id = "228a613d25ff814e9153fa459f1392ef"
-    todo_db_id = "228a613d25ff813dbb4ef3d3d984d186"
+    # .env에서 구성 로드
+    load_dotenv()
+    token = os.getenv("NOTION_TOKEN")
+    task_db_id = os.getenv("NOTION_TASK_DATABASE_ID")
+    todo_db_id = os.getenv("NOTION_TODO_DATABASE_ID")
+
+    if not token:
+        print("❌ NOTION_TOKEN이 설정되지 않았습니다. .env를 확인하세요.")
+        return
+    if not task_db_id or not todo_db_id:
+        print("❌ NOTION_TASK_DATABASE_ID / NOTION_TODO_DATABASE_ID가 필요합니다.")
+        return
 
     creator = NotionTemplateCreator(token)
     creator.create_all_gia_templates(task_db_id, todo_db_id)

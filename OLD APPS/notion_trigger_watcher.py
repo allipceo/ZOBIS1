@@ -17,11 +17,14 @@ import sys
 import logging
 from datetime import datetime
 from notion_client import Client
+import os
+from dotenv import load_dotenv
 
 # 설정
-NOTION_TOKEN = "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"
-TRIGGER_DATABASE_ID = "22aa613d25ff80888257c652d865f85a"  # 트리거용 DB ID
-CHECK_INTERVAL = 30  # 30초마다 체크
+load_dotenv()
+NOTION_TOKEN = os.getenv("NOTION_TOKEN")
+TRIGGER_DATABASE_ID = os.getenv("NOTION_TRIGGER_DATABASE_ID")  # 트리거용 DB ID
+CHECK_INTERVAL = int(os.getenv("NOTION_TRIGGER_CHECK_INTERVAL", "30"))  # 30초 기본
 
 # 로깅 설정
 logging.basicConfig(
